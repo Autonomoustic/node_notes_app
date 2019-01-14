@@ -49,7 +49,7 @@ var getNote = (title) => {
 var logNote = note => {
   console.log('--')
   console.log(`Title: ${note.title}`)
-  console.log(`Bitle: ${note.body}`)
+  console.log(`Body: ${note.body}`)
 }
 
 module.exports = {
