@@ -1,5 +1,3 @@
-console.log('starting app')
-
 const fs = require('fs')
 const _ = require('lodash')
 const yargs = require('yargs')
@@ -10,16 +8,31 @@ var argv = yargs.argv
 
 var command = argv._[0]
 
-console.log('yargs:', argv)
-
 if (command === 'add') {
-  notes.addNote(argv.title, argv.body)
+  var note = notes.addNote(argv.title, argv.body)
+
+  if (note) {
+    console.log('Note created:')
+    notes.logNote(note)
+  } else {
+    console.log('Note title already exists')
+  }
 } else if (command === 'read') {
-  notes.getNote(argv.title)
+  var readNote = notes.getNote(argv.title)
+  if (readNote) {
+    console.log('Read note:')
+    notes.logNote(readNote)
+  } else {
+    console.log('Note not found')
+  }
 } else if (command === 'remove') {
-  notes.removeNote(argv.title)
+  var noteRemoved = notes.removeNote(argv.title)
+  var message = noteRemoved ? 'Note was removed' : 'Note title does not exist'
+  console.log(message)
 } else if (command === 'list') {
-  notes.getAll()
+  var allNotes = notes.getAll()
+  console.log(`Printing ${allNotes.length} note(s)`)
+  allNotes.forEach(note => notes.logNote(note))
 } else {
   console.log('Command not recognized')
 }
